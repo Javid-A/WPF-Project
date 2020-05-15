@@ -1,0 +1,65 @@
+﻿<Window x:Class="WPF_Project.Update"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Project"
+        mc:Ignorable="d"
+        Title="Update" Height="325.575" Width="290" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="91*"/>
+            <ColumnDefinition Width="191*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="Img1" Panel.ZIndex="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="40"/>
+        <Rectangle Grid.Column="0" Grid.RowSpan="4">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#f2fcfe" Offset="-0.2" />
+                    <GradientStop Color="#1c92d2" Offset="1.9" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle Grid.Column="1" Grid.RowSpan="4">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="#FFE2ECE9"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <CheckBox x:Name="ckAdmin" BorderThickness="2" BorderBrush="#1A936F" FontWeight="Bold" FontFamily="Cambria" Foreground="#FF185970" Content="Admin" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Height="15" Width="72"/>
+        <CheckBox x:Name="ckActivate" BorderThickness="2" BorderBrush="#1A936F" FontWeight="Bold" FontFamily="Cambria" Foreground="#FF185970" Content="Activate" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Height="16" Width="72"/>
+        <CheckBox x:Name="ckDelete" BorderThickness="2" BorderBrush="#1A936F" FontWeight="Bold" FontFamily="Cambria" Foreground="#FF185970" Content="Delete" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Height="16" Width="72"/>
+        <Button x:Name="btnUpdate" Content="Update" Cursor="Hand" FontSize="13" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Width="76" Height="22" Click="btnUpdate_Click" Margin="57,26,58,25">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Foreground" Value="#1A936F"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#1A936F"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <TextBlock x:Name="txtName" Text="Name" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="69" FontSize="14" FontWeight="Bold" Foreground="White"/>
+        <TextBlock x:Name="txtEmail" Text="Email" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="69" Foreground="White" FontWeight="Bold" FontSize="11"/>
+    </Grid>
+</Window>

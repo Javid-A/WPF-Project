@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WPFProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Genre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="BookSales" Relationship="Self.FK__BookSales__BookI__31EC6D26" FromRole="Books" ToRole="BookSales" />
+  </EntityType>
+  <EntityType Name="BookSale">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookId" Type="Int32" />
+    <Property Name="SaleId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="Self.FK__BookSales__BookI__31EC6D26" FromRole="BookSales" ToRole="Books" />
+    <NavigationProperty Name="Sale" Relationship="Self.FK__BookSales__SaleI__32E0915F" FromRole="BookSales" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SerialNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__CustomerI__2F10007B" FromRole="Customers" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="Sale">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="BookSales" Relationship="Self.FK__BookSales__SaleI__32E0915F" FromRole="Sales" ToRole="BookSales" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Sales__CustomerI__2F10007B" FromRole="Sales" ToRole="Customers" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Sales__UserId__2E1BDC42" FromRole="Sales" ToRole="Users" />
+    <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="IsActivated" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__UserId__2E1BDC42" FromRole="Users" ToRole="Sales" />
+  </EntityType>
+  <Association Name="FK__BookSales__BookI__31EC6D26">
+    <End Role="Books" Type="Self.Book" Multiplicity="0..1" />
+    <End Role="BookSales" Type="Self.BookSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookSales">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BookSales__SaleI__32E0915F">
+    <End Role="Sales" Type="Self.Sale" Multiplicity="0..1" />
+    <End Role="BookSales" Type="Self.BookSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookSales">
+        <PropertyRef Name="SaleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sales__CustomerI__2F10007B">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sales__UserId__2E1BDC42">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WPFProjectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Books" EntityType="Self.Book" />
+    <EntitySet Name="BookSales" EntityType="Self.BookSale" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Sales" EntityType="Self.Sale" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__BookSales__BookI__31EC6D26" Association="Self.FK__BookSales__BookI__31EC6D26">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="BookSales" EntitySet="BookSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BookSales__SaleI__32E0915F" Association="Self.FK__BookSales__SaleI__32E0915F">
+      <End Role="Sales" EntitySet="Sales" />
+      <End Role="BookSales" EntitySet="BookSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sales__CustomerI__2F10007B" Association="Self.FK__Sales__CustomerI__2F10007B">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sales__UserId__2E1BDC42" Association="Self.FK__Sales__UserId__2E1BDC42">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <EntitySet Name="SaleDetails" EntityType="WPFProjectModel.SaleDetail" />
+  </EntityContainer>
+  <EntityType Name="SaleDetail">
+    <Key>
+      <PropertyRef Name="Sale_ID" />
+      <PropertyRef Name="Seller" />
+      <PropertyRef Name="Customer" />
+      <PropertyRef Name="Customer_Phone" />
+      <PropertyRef Name="Sale_Date" />
+      <PropertyRef Name="Deadline" />
+      <PropertyRef Name="Total" />
+    </Key>
+    <Property Name="Sale_ID" Type="Int32" Nullable="false" />
+    <Property Name="Seller" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Customer" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Customer_Phone" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Sale_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Completed_Date" Type="DateTime" Precision="0" />
+    <Property Name="Total" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+  </EntityType>
+</Schema>
